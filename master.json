@@ -1,0 +1,43 @@
+{
+	"builders":[
+		{	
+			"type": "parallels-iso",
+			"disk_size": 40520,
+ 			"guest_os_type": "centos7",
+  			"iso_url": "/software/centos7/template/CentOS-7.0-1406-x86_64-Minimal.iso",
+  			"iso_checksum": "e3afe3f1121d69c40cc23f0bafa05e5d",
+  			"iso_checksum_type": "md5",
+  			"ssh_username": "sysadmin",
+  			"ssh_password": "sysadmin",
+  			"ssh_wait_timeout": "30s",
+  			"prlctl": [
+    					["set", "{{.Name}}", "--memsize", "2048"],
+    					["set", "{{.Name}}", "--cpus", "2"]
+  			],
+  			"shutdown_command": "echo 'packer' | sudo -S shutdown -P now"	
+		},
+		{
+			"type": "vmware-iso",
+  			"iso_url":"/software/centos7/template/CentOS-7.0-1406-x86_64-Minimal.iso",
+			"iso_checksum": "e3afe3f1121d69c40cc23f0bafa05e5d",
+  			"iso_checksum_type": "md5",
+  			"ssh_username": "sysadmin",
+			"ssh_password": "sysadmin",
+  			"ssh_wait_timeout": "30s",
+			 "vmx_data": {
+       				"memsize": "2048",
+        			"numvcpus": "2",
+        			"cpuid.coresPerSocket": "2"
+      			},
+  			"shutdown_command": "shutdown -P now"
+		}	
+	],
+	"provisioners": [
+   	 	{
+      			"type": "shell",
+			"execute_command":"echo `sudo apt get update`"
+    		}
+ 	 ]
+
+
+}
