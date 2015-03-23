@@ -3,43 +3,21 @@
         {
             "type": "parallels-iso",
             "disk_size": 40520,
-            "guest_os_type": "centos7",
+            "guest_os_type": "centos",
             "parallels_tools_flavor": "lin",
             "iso_url": "./files/binaries/CentOS-7.0-1406-x86_64-Minimal.iso",
             "iso_checksum": "e3afe3f1121d69c40cc23f0bafa05e5d",
             "iso_checksum_type": "md5",
             "ssh_username": "root",
             "ssh_password": "sysadmin",
-            "ssh_wait_timeout": "30s",
+            "ssh_wait_timeout": "300s",
             "prlctl": [
                 ["set", "{{.Name}}", "--memsize", "2048"],
                 ["set", "{{.Name}}", "--cpus", "2"]
             ],
             "shutdown_command": "/sbin/shutdown -h now",
             "http_directory": "./files/config/",
-            "vm_name": "vmtest-centos-parallels",
-            "ssh_port": 22,
-            "boot_command":
-            [
-                "<wait><tab><wait> text ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/anaconda-ks.cfg <enter><wait10><wait10><wait10><enter>"
-            ]
-        },
-		{
-			"type": "vmware-iso",
-  			"iso_url":"./files/binaries/CentOS-7.0-1406-x86_64-Minimal.iso",
-			"iso_checksum": "e3afe3f1121d69c40cc23f0bafa05e5d",
-  			"iso_checksum_type": "md5",
-  			"ssh_username": "root",
-			"ssh_password": "sysadmin",
-  			"ssh_wait_timeout": "30s",
-			 "vmx_data": {
-       				"memsize": "2048",
-        			"numvcpus": "2",
-        			"cpuid.coresPerSocket": "2"
-      			},
-  			"shutdown_command": "/sbin/shutdown -h now",
-            "http_directory": "./files/config/",
-            "vm_name": "vmtest-centos-vmware",
+            "vm_name": "centos-parallels",
             "ssh_port": 22,
             "boot_command":
             [
@@ -48,10 +26,19 @@
 		}
 	],
 	"provisioners": [
+			{
+						"type":"shell",
+						"script":"files/software/install.sh"
+			},
+			{			"type":"file",
+						"source":"files/software/jdk-7u75-linux-x64.rpm",
+						"destination":"/a01/software/jdk-7u75-linux-x64.rpm"
+			},
    	 	{
       			"type": "shell",
-			"inline":"echo 'hi'"
-    		}
+						"inline":["set -e","yum localinstall -y /a01/software/jdk-7u75-linux-x64.rpm",
+						"echo 'java successfully installed'"]
+    	}
  	 ]
 
 
