@@ -13,7 +13,9 @@
             "ssh_wait_timeout": "300s",
             "prlctl": [
                 ["set", "{{.Name}}", "--memsize", "2048"],
-                ["set", "{{.Name}}", "--cpus", "2"]
+                ["set", "{{.Name}}", "--cpus", "2"],
+                ["set", "{{.Name}}", "--device-del", "net0"],
+                ["set", "{{.Name}}", "--device-add", "net", "--type", "bridged"]
             ],
             "shutdown_command": "/sbin/shutdown -h now",
             "http_directory": "./files/config/",
