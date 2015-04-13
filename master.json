@@ -14,8 +14,7 @@
             "prlctl": [
                 ["set", "{{.Name}}", "--memsize", "2048"],
                 ["set", "{{.Name}}", "--cpus", "2"],
-                ["set", "{{.Name}}", "--device-del", "net0"],
-                ["set", "{{.Name}}", "--device-add", "net", "--type", "bridged"]
+                ["set", "{{.Name}}", "--device-add", "net", "--type", "bridged", "--iface", "Wi-Fi"]
             ],
             "shutdown_command": "/sbin/shutdown -h now",
             "http_directory": "./files/config/",
