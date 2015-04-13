@@ -27,20 +27,26 @@
 		}
 	],
 	"provisioners": [
-			{
-						"type":"shell",
-						"script":"files/software/install.sh"
-			},
-			{			"type":"file",
-						"source":"files/software/jdk-7u75-linux-x64.rpm",
-						"destination":"/a01/software/jdk-7u75-linux-x64.rpm"
-			},
-   	 	{
-      			"type": "shell",
-						"inline":["set -e","yum localinstall -y /a01/software/jdk-7u75-linux-x64.rpm",
-						"echo 'java successfully installed'"]
-    	}
+        {
+            "type":"shell",
+            "script":"files/software/install.sh"
+        },
+        {
+            "type":"file",
+            "source":"files/software/jdk-7u75-linux-x64.rpm",
+            "destination":"/a01/software/jdk-7u75-linux-x64.rpm"
+        },
+        {
+            "type": "shell",
+            "inline":[
+                "set -e",
+                "yum update"
+            ]
+        },
+        {
+            "type": "shell",
+            "inline":["set -e","yum localinstall -y /a01/software/jdk-7u75-linux-x64.rpm",
+                "echo 'java successfully installed'"]
+        }
  	 ]
-
-
 }
