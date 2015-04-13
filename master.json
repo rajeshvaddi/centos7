@@ -40,7 +40,7 @@
             "type": "shell",
             "inline":[
                 "set -e",
-                "yum update"
+                "yum update -y"
             ]
         },
         {
